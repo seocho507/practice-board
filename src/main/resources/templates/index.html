@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<style>
+    button {
+        background-color: #4CAF50;
+        border: none;
+        border-radius: 3px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        padding: 30px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    button:hover {
+        background-color: #3e8e41;
+    }
+</style>
+<body>
+<button th:href="@{/joinform.html}">회원가입</button>
+
+<button th:href="@{/loginform.html}">로그인</button>
+
+<button th:href="@{/boards/index.html}">게시판</button>
+
+</body>
+</html>

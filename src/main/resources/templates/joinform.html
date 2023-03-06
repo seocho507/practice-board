@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Join Form</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Join Form</h1>
+<form th:action="@{/join}" th:object="${requestDto}" method="post">
+    <label for="userIdInput">User ID:</label>
+    <input type="text" th:field="*{userId}" id="userIdInput" required>
+    <div id="userIdMessage"></div>
+
+    <label for="passwordInput">Password:</label>
+    <input type="password" th:field="*{password}" id="passwordInput" required>
+
+    <label for="userNameInput">User Name:</label>
+    <input type="text" th:field="*{userName}" id="userNameInput" required>
+
+    <label for="phoneNumberInput">Phone Number:</label>
+    <input type="text" th:field="*{phoneNumber}" id="phoneNumberInput" required>
+
+    <button type="submit">Join</button>
+</form>
+</body>
+<script th:inline="javascript">
+    var userIdInput = document.getElementById("userIdInput");
+    var userIdMessage = document.getElementById("userIdMessage");
+    var joinButton = document.querySelector('button[type="submit"]');
+    var originalButtonColor = joinButton.style.backgroundColor;
+
+    userIdInput.addEventListener("change", function () {
+        var userId = userIdInput.value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/checkUserId?userId=" + userId);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                if (xhr.responseText === "true") {
+                    userIdMessage.textContent = "Id already exists";
+                    userIdMessage.style.color = "red";
+                    joinButton.disabled = true;
+                    joinButton.style.backgroundColor = "gray";
+                } else {
+                    userIdMessage.textContent = "";
+                    userIdMessage.style.color = "";
+                    joinButton.disabled = false;
+                    joinButton.style.backgroundColor = originalButtonColor;
+                }
+            }
+        };
+        xhr.send();
+    });
+
+</script>
+</html>

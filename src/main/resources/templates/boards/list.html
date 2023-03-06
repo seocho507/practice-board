@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board Posts</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Board Posts</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Writer</th>
+        <th>Title</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board : ${boards.content}">
+        <td th:text="${board.writer}"></td>
+        <td th:text="${board.title}"></td>
+        <td><a th:href="@{/list/{boardId}(boardId=${board.id})}">View</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${boards.hasPrevious()}">
+    <a th:href="@{/list(page=${boards.previousPageable().pageNumber})}">Previous</a>
+</div>
+<div th:if="${boards.hasNext()}">
+    <a th:href="@{/list(page=${boards.nextPageable().pageNumber})}">Next</a>
+</div>
+</body>
+</html>
